@@ -1,5 +1,6 @@
-var city, api, description, currenttemp, mintemp, maxtemp;
+var city, api, description, currenttemp, mintemp, maxtemp, sendHTML;
 var base = "http://api.openweathermap.org/data/2.5/weather?q=";
+var weather = document.querySelector("#weather");
 
 // Store selected city in variable "city" and build API URL
 document.querySelector("#citylist").addEventListener('change', 
@@ -20,16 +21,19 @@ document.querySelector("#citylist").addEventListener('change',
 
 		      // Examine the text in the response  
 		      response.json().then(function(data) {  		        
-
-		        // Weather Description
+		        // Parse data
 		        description = data["weather"][0]["description"];
-
-		        // Weather Temps
 		        currenttemp = data["main"]["temp"];
 		        mintemp = data["main"]["temp_min"];
 		        maxtemp = data["main"]["temp_max"]
 
-		        console.log(data["main"]["temp_min"]);
+		        sendHTML = "<ul>\n" + 
+		        			"<li>Description: " + description + "</li>\n" + 
+		        			"<li>Current temperature: " + currenttemp + "&deg;C</li>\n" + 
+		        			"<li>Minimum temperature: " + mintemp + "&deg;C</li>\n" + 
+		        			"<li>Maximum temperature: " + maxtemp + "&deg;C</li>\n" + 
+		        			"</ul>";	
+		        weather.insertAdjacentHTML('afterbegin', sendHTML);
 
 		        console.log("Description: " + description + "\n" + 
 		        			"Current temp: " + currenttemp + "\n" + 
@@ -39,7 +43,7 @@ document.querySelector("#citylist").addEventListener('change',
 		    }  
 		  )  
 		  .catch(function(err) {  
-		    console.log('Fetch Error :-S', err);  
+		    console.log('Fetch Error :-S', err); 
 		  });
 
 		 api = base;
