@@ -5,6 +5,10 @@ var weather = document.querySelector("#weather");
 // Store selected city in variable "city" and build API URL
 document.querySelector("#citylist").addEventListener('change', 
 	function () {
+		while (weather.firstChild) {
+		  weather.removeChild(weather.firstChild);
+		}
+
 		city = citylist.options[citylist.selectedIndex].value;
 	    console.log(city); 
 	    api = base + city + ",AU&units=metric";
@@ -32,13 +36,10 @@ document.querySelector("#citylist").addEventListener('change',
 		        			"<li>Current temperature: " + currenttemp + "&deg;C</li>\n" + 
 		        			"<li>Minimum temperature: " + mintemp + "&deg;C</li>\n" + 
 		        			"<li>Maximum temperature: " + maxtemp + "&deg;C</li>\n" + 
-		        			"</ul>";	
+		        			"</ul>";
+
 		        weather.insertAdjacentHTML('afterbegin', sendHTML);
 
-		        console.log("Description: " + description + "\n" + 
-		        			"Current temp: " + currenttemp + "\n" + 
-		        			"Min temp: " + mintemp + "\n" + 
-		        			"Max temp: " + maxtemp);
 		      });  
 		    }  
 		  )  
